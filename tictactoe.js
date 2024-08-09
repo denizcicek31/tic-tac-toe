@@ -8,8 +8,11 @@ const gameSelf = (function() {
     const winner2 = document.querySelector("h1");
     const boxes = document.querySelectorAll(".box");
     const winner = document.querySelector("h1");
+   const winnerReal = document.querySelector(".real")
+    function winnerDeciding(){
+        (winner.textContent = `${currentPlayer.name} is the winner!!!`)
+    }
    
-
     const gameBoard = [
         [null, null, null],
         [null, null, null],
@@ -32,10 +35,13 @@ const gameSelf = (function() {
             scorePlus: function() {
                 ++score;
                 return score;
+            },
+            scoreReset(){
+                 score = 0;
             }
         };
     };
-
+  
     player1 = playerSelection(playerName, "X", 0);
     player2 = playerSelection(playerName, "O", 0);
 
@@ -60,7 +66,7 @@ const gameSelf = (function() {
         playerPara1.textContent = `First player is ${player1.name} with marker O`;
         playerPara2.textContent = `Second player is ${player2.name} with marker X`;
     });
-
+ 
     // Event handler for button clicks on the game board
     document.querySelectorAll('div[class*="box"]').forEach((element, index) => {
         element.addEventListener('click', () => {
@@ -111,10 +117,21 @@ const gameSelf = (function() {
             resetGame();
             clearText()
         }
+        
         if (player1.scoreGet() === 3) {
-            alert(`${player1.name} Won the First Game`);
+            player1.scoreReset()
+            winnerDeciding()
+            alert(player1.name)
+            resetGame()
+            clearText()
+            
         } else if (player2.scoreGet() === 3) {
-            alert(`${player2.name} WON THE FIRST GAME!`);
+            player2.scoreReset()
+            console.log(player2.name)
+            winnerDeciding()
+            resetGame()
+            clearText()
+           
         }
     }
 
@@ -126,7 +143,7 @@ const gameSelf = (function() {
                 return;
             }
             e.target.textContent = currentPlayer.marker;
-            winnerDecide()
+           
 
         });
     });
@@ -138,6 +155,6 @@ const gameSelf = (function() {
             }
            
         }
-      
+
     }
 })();
